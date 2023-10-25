@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "@boardzilla/core": "link:../boardzilla-core",
+    "@boardzilla/core": "latest",
     "react": "^18.2",
     "react-dom": "^18.2"
   },
   "devDependencies": {
+    "@boardzilla/devtools": "latest",
     "@types/node": "^20.8.7",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.14",
@@ -16,7 +17,11 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build:ui": "npx node ui/esbuild.mjs",
-    "build:game": "npx node game/esbuild.mjs"
+    "dev": "bz run -root .",
+    "publish": "bz release",
+    "build:ui": "npx node esbuild.ui.mjs",
+    "build:ui:prod": "NODE_ENV=production npx node esbuild.ui.mjs",
+    "build:game": "npx node esbuild.game.mjs",
+    "build:game:prod": "NODE_ENV=production npx node esbuild.game.mjs"
   }
 }

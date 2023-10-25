@@ -9,25 +9,25 @@
     "root": ".",
     "build": {
       "dev": "npm run build:ui",
-      "prod": "npm run build:ui"
+      "prod": "npm run build:ui:prod"
     },
     "watchPaths": [
       "node_modules/@boardzilla/core/game",
       "node_modules/@boardzilla/core/ui",
-      "ui/src",
-      "game/src"
+      "src/ui",
+      "src/game"
     ],
-    "outDir": "ui/build"
+    "outDir": "build/ui"
   },
   "game": {
     "root": ".",
     "build": {
       "dev": "npm run build:game",
-      "prod": "npm run build:game"
+      "prod": "npm run build:game:prod"
     },
     "watchPaths": [
       "node_modules/@boardzilla/core/game",
-      "game/src"
+      "src/game"
     ],
     "out": "game/build/game-interface.js"
   }

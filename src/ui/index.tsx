@@ -1,6 +1,6 @@
 import render, { numberSetting } from '@boardzilla/core/ui';
 
-import setup from '../../game/src/index';
+import setup from '../game/index';
 
 import './style.scss';
 

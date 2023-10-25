@@ -1,6 +1,9 @@
 import * as esbuild from 'esbuild'
 import { sassPlugin } from 'esbuild-sass-plugin'
 
+const env = process.env.NODE_ENV || "development"
+const minify = env === "production"
+
 await esbuild.build({
   format: 'iife',
   assetNames: 'assets/[name]-[hash]',
@@ -11,8 +14,9 @@ await esbuild.build({
     '.ogg': 'dataurl',
   },
   keepNames: true,
-  outdir: 'ui/build',
-  entryPoints: ['ui/src/index.tsx'],
+  outdir: 'build/ui',
+  entryPoints: ['src/ui/index.tsx'],
   bundle: true,
+  minify,
   plugins: [sassPlugin()]
 })
