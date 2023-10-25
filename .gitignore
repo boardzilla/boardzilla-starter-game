@@ -1,0 +1,6 @@
+# build artifacts
+/ui/build
+/game/build
+
+node_modules
+.save-states
