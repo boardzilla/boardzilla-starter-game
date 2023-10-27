@@ -5,7 +5,7 @@ import setup, {
   playerActions,
   whileLoop,
   eachPlayer,
-  imports
+  boardClasses,
 } from '@boardzilla/core/game';
 
 export class MyGamePlayer extends Player {
@@ -16,8 +16,7 @@ const {
   Board,
   Space,
   Piece,
-  action
-} = imports<MyGamePlayer>();
+} = boardClasses(MyGamePlayer);
 
 class MyGameBoard extends Board {
   phase: number = 1;
@@ -33,8 +32,8 @@ export default setup({
   playerClass: MyGamePlayer,
   boardClass: MyGameBoard,
   elementClasses: [ Token ],
-  setup: (game, board) => {
-    for (const player of game.players) {
+  setup: board => {
+    for (const player of board.players) {
       const mat = board.create(Space, 'mat', { player });
       mat.onEnter(Token, t => t.showToAll());
     }
@@ -45,8 +44,8 @@ export default setup({
     pool.shuffle();
   },
 
-  actions: (game, board) => ({
-    take: () => action({
+  actions: (board, action, player) => ({
+    take: action({
       prompt: 'Choose a token',
       message: "$player drew a $1 token.",
     }).move({
@@ -55,7 +54,7 @@ export default setup({
     }),
   }),
 
-  flow: (game, board) => whileLoop({
+  flow: board => whileLoop({
     while: () => true,
     do: eachPlayer({
       name: 'player',
@@ -63,8 +62,8 @@ export default setup({
         actions: {
           take: () => {
             if (board.first('mat', {mine: true})!.first(Token, {color: 'red'})) {
-              game.message("$1 wins!", game.players.current());
-              game.finish(game.players.current());
+              board.message("$1 wins!", board.players.current());
+              board.finish(board.players.current());
             }
           }
         }
