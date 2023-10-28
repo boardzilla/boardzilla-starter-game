@@ -1,6 +1,7 @@
 import React from 'react';
 
-import setup, {
+import {
+  createGame,
   Player,
   playerActions,
   whileLoop,
@@ -28,7 +29,7 @@ export class Token extends Piece {
 
 Token.hiddenAttributes = ['name', 'color'];
 
-export default setup({
+export default createGame({
   playerClass: MyGamePlayer,
   boardClass: MyGameBoard,
   elementClasses: [ Token ],
