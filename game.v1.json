@@ -29,6 +29,6 @@
       "node_modules/@boardzilla/core/game",
       "src/game"
     ],
-    "out": "game/build/game-interface.js"
+    "out": "build/game/game-interface.js"
   }
 }

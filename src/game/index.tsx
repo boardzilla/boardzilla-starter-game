@@ -27,7 +27,7 @@ export class Token extends Piece {
   color: 'red' | 'blue';
 }
 
-Token.hiddenAttributes = ['name', 'color'];
+Token.hide('name', 'color');
 
 export default createGame({
   playerClass: MyGamePlayer,
