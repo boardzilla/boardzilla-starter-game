@@ -1,6 +1,6 @@
 {
   "name": "powergrid-boardzilla",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "license": "MIT",
   "dependencies": {
     "@boardzilla/core": "latest",
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "bz run -root .",
-    "publish": "bz release",
+    "publish": "bz submit -root .",
     "build:ui": "npx node esbuild.ui.mjs",
     "build:ui:prod": "NODE_ENV=production npx node esbuild.ui.mjs",
     "build:game": "npx node esbuild.game.mjs",
