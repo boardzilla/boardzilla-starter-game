@@ -7,6 +7,7 @@ import {
   whileLoop,
   eachPlayer,
   boardClasses,
+  numberSetting,
 } from '@boardzilla/core/game';
 
 export class MyGamePlayer extends Player {
@@ -33,6 +34,11 @@ export default createGame({
   playerClass: MyGamePlayer,
   boardClass: MyGameBoard,
   elementClasses: [ Token ],
+
+  settings: {
+    tokens: numberSetting('a number', 4, 24),
+  },
+
   setup: board => {
     for (const player of board.players) {
       const mat = board.create(Space, 'mat', { player });
@@ -40,7 +46,7 @@ export default createGame({
     }
     const pool = board.create(Space, 'pool');
     pool.onEnter(Token, t => t.hideFromAll());
-    pool.createMany(11, Token, 'blue', { color: 'blue' });
+    pool.createMany(board.gameSetting('tokens') - 1, Token, 'blue', { color: 'blue' });
     pool.create(Token, 'red', { color: 'red' });
     pool.shuffle();
   },
@@ -48,11 +54,12 @@ export default createGame({
   actions: (board, action, player) => ({
     take: action({
       prompt: 'Choose a token',
-      message: "$player drew a $1 token.",
     }).move({
       choosePiece: board.first('pool')!.all(Token),
       into: board.first('mat', {mine: true})
-    }),
+    }).message(
+      token => `${player} drew a ${token} token.`
+    )
   }),
 
   flow: board => whileLoop({
@@ -71,4 +78,29 @@ export default createGame({
       })
     })
   }),
+
+  layout: board => {
+    board.appearance({
+      render: () => null
+    });
+
+    board.all(Token).appearance({
+      aspectRatio: 1,
+      render: () => (
+        <div className="flipper">
+          <div className="front"></div>
+          <div className="back"></div>
+        </div>
+      )
+    });
+
+    board.layout(Space, {
+      gap: 1,
+      margin: 1
+    });
+
+    board.all(Space).layout(Token, {
+      gap: 1,
+    });
+  }
 });
