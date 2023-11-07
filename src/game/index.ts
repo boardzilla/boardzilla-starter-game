@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   createGame,
   Player,
@@ -7,8 +5,7 @@ import {
   whileLoop,
   eachPlayer,
   boardClasses,
-  numberSetting,
-} from '@boardzilla/core/game';
+} from '@boardzilla/core';
 
 export class MyGamePlayer extends Player {
   score: number = 0;
@@ -34,10 +31,6 @@ export default createGame({
   playerClass: MyGamePlayer,
   boardClass: MyGameBoard,
   elementClasses: [ Token ],
-
-  settings: {
-    tokens: numberSetting('a number', 4, 24),
-  },
 
   setup: board => {
     for (const player of board.players) {
@@ -77,30 +70,5 @@ export default createGame({
         }
       })
     })
-  }),
-
-  layout: board => {
-    board.appearance({
-      render: () => null
-    });
-
-    board.all(Token).appearance({
-      aspectRatio: 1,
-      render: () => (
-        <div className="flipper">
-          <div className="front"></div>
-          <div className="back"></div>
-        </div>
-      )
-    });
-
-    board.layout(Space, {
-      gap: 1,
-      margin: 1
-    });
-
-    board.all(Space).layout(Token, {
-      gap: 1,
-    });
-  }
+  })
 });

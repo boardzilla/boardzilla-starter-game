@@ -1,14 +1,15 @@
 {
-  "name": "powergrid-boardzilla",
+  "name": "boardzilla-starter-game",
   "version": "1.0.5",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@boardzilla/core": "latest",
+    "@boardzilla/devtools": "latest",
     "react": "^18.2",
     "react-dom": "^18.2"
   },
   "devDependencies": {
-    "@boardzilla/devtools": "latest",
     "@types/node": "^20.8.7",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.14",

@@ -12,8 +12,6 @@
       "prod": "npm run build:ui:prod"
     },
     "watchPaths": [
-      "node_modules/@boardzilla/core/game",
-      "node_modules/@boardzilla/core/ui",
       "src/ui",
       "src/game"
     ],
@@ -26,7 +24,6 @@
       "prod": "npm run build:game:prod"
     },
     "watchPaths": [
-      "node_modules/@boardzilla/core/game",
       "src/game"
     ],
     "out": "build/game/game-interface.js"
