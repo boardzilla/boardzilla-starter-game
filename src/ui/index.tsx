@@ -6,7 +6,7 @@ import './style.scss';
 
 render(setup, {
   settings: {
-    tokens: numberSetting('a number', 4, 24),
+    tokens: numberSetting('Number of tokens', 4, 24),
   },
   layout: board => {
 
