@@ -47,11 +47,11 @@ export default createGame({
   actions: (board, action, player) => ({
     take: action({
       prompt: 'Choose a token',
-    }).move({
-      choosePiece: board.first('pool')!.all(Token),
-      into: board.first('mat', {mine: true})
-    }).message(
-      token => `${player} drew a ${token} token.`
+    }).move(
+      'token', board.first('pool')!.all(Token),
+      'mat', board.first('mat', {mine: true})
+    ).message(
+      `{{player}} drew a {{token}} token.`
     )
   }),
 
