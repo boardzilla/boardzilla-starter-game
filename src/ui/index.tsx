@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, numberSetting, boardClasses } from '@boardzilla/core';
-import { default as setup, MyGamePlayer, Token } from '../game/index.js';
+import { render, numberSetting } from '@boardzilla/core';
+import { default as setup, Space, Token } from '../game/index.js';
 
 import './style.scss';
 
@@ -9,9 +9,6 @@ render(setup, {
     tokens: numberSetting('Number of tokens', 4, 24),
   },
   layout: board => {
-
-    const { Space } = boardClasses(MyGamePlayer);
-
     board.appearance({
       render: () => null
     });
@@ -33,6 +30,7 @@ render(setup, {
 
     board.all(Space).layout(Token, {
       gap: 1,
+      margin: 1
     });
   }
 });

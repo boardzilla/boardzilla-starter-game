@@ -1,25 +1,26 @@
 import {
   createGame,
+  createBoardClass,
+  createBoardClasses,
   Player,
   playerActions,
   whileLoop,
   eachPlayer,
-  boardClasses,
 } from '@boardzilla/core';
 
 export class MyGamePlayer extends Player {
   score: number = 0;
 };
 
-const {
-  Board,
-  Space,
-  Piece,
-} = boardClasses(MyGamePlayer);
+const Board = createBoardClass(MyGamePlayer);
 
 class MyGameBoard extends Board {
   phase: number = 1;
 }
+
+const { Space, Piece } = createBoardClasses(MyGameBoard);
+
+export { Space };
 
 export class Token extends Piece {
   color: 'red' | 'blue';
@@ -27,25 +28,23 @@ export class Token extends Piece {
 
 Token.hide('name', 'color');
 
-export default createGame({
-  playerClass: MyGamePlayer,
-  boardClass: MyGameBoard,
-  elementClasses: [ Token ],
+export default createGame(MyGamePlayer, MyGameBoard, [Token], board => {
 
-  setup: board => {
-    for (const player of board.players) {
-      const mat = board.create(Space, 'mat', { player });
-      mat.onEnter(Token, t => t.showToAll());
-    }
-    const pool = board.create(Space, 'pool');
-    pool.onEnter(Token, t => t.hideFromAll());
-    pool.createMany(board.gameSetting('tokens') - 1, Token, 'blue', { color: 'blue' });
-    pool.create(Token, 'red', { color: 'red' });
-    pool.shuffle();
-  },
+  const action = board.action;
 
-  actions: (board, action, player) => ({
-    take: action({
+  for (const player of board.players) {
+    const mat = board.create(Space, 'mat', { player });
+    mat.onEnter(Token, t => t.showToAll());
+  }
+
+  const pool = board.create(Space, 'pool');
+  pool.onEnter(Token, t => t.hideFromAll());
+  pool.createMany(board.gameSetting('tokens') - 1, Token, 'blue', { color: 'blue' });
+  pool.create(Token, 'red', { color: 'red' });
+  pool.shuffle();
+
+  board.defineActions({
+    take: () => action({
       prompt: 'Choose a token',
     }).move(
       'token', board.first('pool')!.all(Token),
@@ -53,22 +52,24 @@ export default createGame({
     ).message(
       `{{player}} drew a {{token}} token.`
     )
-  }),
+  });
 
-  flow: board => whileLoop({
-    while: () => true,
-    do: eachPlayer({
-      name: 'player',
-      do: playerActions({
-        actions: {
-          take: () => {
-            if (board.first('mat', {mine: true})!.first(Token, {color: 'red'})) {
-              board.message("$1 wins!", board.players.current());
-              board.finish(board.players.current());
+  board.defineFlow(() => (
+    whileLoop({
+      while: () => true,
+      do: eachPlayer({
+        name: 'player',
+        do: playerActions({
+          actions: {
+            take: ({ player }) => {
+              if (board.first('mat', {mine: true})!.first(Token, {color: 'red'})) {
+                board.message("{{player}} wins!", { player });
+                board.finish(player);
+              }
             }
           }
-        }
+        })
       })
     })
-  })
+  ));
 });
