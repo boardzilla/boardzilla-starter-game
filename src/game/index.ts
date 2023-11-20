@@ -28,7 +28,9 @@ export class Token extends Piece {
 
 Token.hide('name', 'color');
 
-export default createGame(MyGamePlayer, MyGameBoard, [Token], board => {
+export default createGame(MyGamePlayer, MyGameBoard, board => {
+
+  board.registerClasses(Token);
 
   const action = board.action;
 
