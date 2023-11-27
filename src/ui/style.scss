@@ -1,6 +1,3 @@
-#game {
-}
-
 #play-area {
   .Token {
     perspective: 1000%;
@@ -21,6 +18,10 @@
         border-radius: 50%;
         border: .3em solid black;
         backface-visibility: hidden;
+
+        html.dark & {
+          border: .3em solid rgb(164, 164, 164);
+        }
       }
 
       /* front pane, placed above back */
@@ -44,13 +45,16 @@
 
     &[data-color=blue] .front {
       background: blue;
-    }
+      html.dark & {
+        background: rgb(13, 13, 115);
+      }
+  }
 
     &[data-color=red] .front {
       background: red;
+      html.dark & {
+        background: rgb(115, 13, 13);
+      }
     }
   }
-}
-
-.player-controls {
 }
