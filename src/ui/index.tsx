@@ -3,6 +3,7 @@ import { render, numberSetting } from '@boardzilla/core';
 import { default as setup, Space, Token } from '../game/index.js';
 
 import './style.scss';
+import '@boardzilla/core/index.css';
 
 render(setup, {
   settings: {

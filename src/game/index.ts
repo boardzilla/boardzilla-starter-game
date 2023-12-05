@@ -1,30 +1,28 @@
 import {
   createGame,
-  createBoardClass,
   createBoardClasses,
   Player,
+  Board,
   playerActions,
-  whileLoop,
+  loop,
   eachPlayer,
 } from '@boardzilla/core';
 
-export class MyGamePlayer extends Player {
+export class MyGamePlayer extends Player<MyGamePlayer, MyGameBoard> {
   /**
    * Any properties of your players that are specific to your game go here
    */
   score: number = 0;
 };
 
-const Board = createBoardClass(MyGamePlayer);
-
-class MyGameBoard extends Board {
+class MyGameBoard extends Board<MyGamePlayer, MyGameBoard> {
   /**
    * Any overall properties of your game go here
    */
   phase: number = 1;
 }
 
-const { Space, Piece } = createBoardClasses(MyGameBoard);
+const { Space, Piece } = createBoardClasses<MyGamePlayer, MyGameBoard>();
 
 export { Space };
 
@@ -38,14 +36,14 @@ export class Token extends Piece {
 
 Token.hide('name', 'color');
 
-export default createGame(MyGamePlayer, MyGameBoard, board => {
+export default createGame(MyGamePlayer, MyGameBoard, game => {
+
+  const { board, action } = game;
 
   /**
    * Register all custom pieces and spaces
    */
   board.registerClasses(Token);
-
-  const action = board.action;
 
   /**
    * Setup your game board. If you capture your board spaces in variables here,
@@ -64,7 +62,7 @@ export default createGame(MyGamePlayer, MyGameBoard, board => {
   pool.create(Token, 'red', { color: 'red' });
   pool.shuffle();
 
-  board.defineActions({
+  game.defineActions({
     take: () => action({
       prompt: 'Choose a token',
     }).move(
@@ -75,22 +73,22 @@ export default createGame(MyGamePlayer, MyGameBoard, board => {
     )
   });
 
-  board.defineFlow(() => (
-    whileLoop({
-      while: () => true,
-      do: eachPlayer({
+  game.defineFlow(
+    loop(
+      eachPlayer({
         name: 'player',
         do: playerActions({
-          actions: {
-            take: ({ player }) => {
+          actions: [{
+            name: 'take',
+            do: ({ player }) => {
               if (board.first('mat', {mine: true})!.first(Token, {color: 'red'})) {
-                board.message("{{player}} wins!", { player });
-                board.finish(player);
+                game.message("{{player}} wins!", { player });
+                game.finish(player);
               }
             }
-          }
+          }]
         })
       })
-    })
-  ));
+    )
+  );
 });
