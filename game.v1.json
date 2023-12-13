@@ -1,10 +1,6 @@
 {
-  "name": "your-game",
-  "friendlyName": "Your Game",
-  "description": "",
   "minPlayers": 1,
   "maxPlayers": 4,
-  "image": "image.jpg",
   "ui": {
     "root": ".",
     "build": {
