@@ -19,7 +19,8 @@
   },
   "scripts": {
     "dev": "bz run -root .",
-    "submit": "bz submit -root . -interactive",
+    "info": "bz info -root .",
+    "submit": "bz submit -root .",
     "build:ui": "npx node esbuild.ui.mjs",
     "build:ui:prod": "NODE_ENV=production npx node esbuild.ui.mjs",
     "build:game": "npx node esbuild.game.mjs",
