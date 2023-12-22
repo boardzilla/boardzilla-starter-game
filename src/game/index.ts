@@ -34,8 +34,6 @@ export class Token extends Piece {
   color: 'red' | 'blue';
 }
 
-Token.hide('name', 'color');
-
 export default createGame(MyGamePlayer, MyGameBoard, game => {
 
   const { board, action } = game;
@@ -63,14 +61,19 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
   pool.shuffle();
 
   game.defineActions({
-    take: () => action({
+    take: player => action({
       prompt: 'Choose a token',
     }).move(
       'token', pool.all(Token),
-      'mat', board.first('mat', {mine: true})
+      'mat', player.my('mat')
     ).message(
       `{{player}} drew a {{token}} token.`
-    )
+    ).do(({ token }) => {
+      if (token.color === 'red') {
+        game.message("{{player}} wins!", { player });
+        game.finish(player);
+      }
+    })
   });
 
   game.defineFlow(
@@ -78,15 +81,7 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
       eachPlayer({
         name: 'player',
         do: playerActions({
-          actions: [{
-            name: 'take',
-            do: ({ player }) => {
-              if (board.first('mat', {mine: true})!.first(Token, {color: 'red'})) {
-                game.message("{{player}} wins!", { player });
-                game.finish(player);
-              }
-            }
-          }]
+          actions: ['take']
         })
       })
     )
