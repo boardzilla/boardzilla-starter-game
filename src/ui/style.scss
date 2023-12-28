@@ -27,6 +27,7 @@
       /* front pane, placed above back */
       .front {
         z-index: 2;
+        background: #333;
         /* for firefox 31 */
         transform: rotateY(0deg);
       }
@@ -39,7 +40,7 @@
     }
 
     /* flip the pane when hovered */
-    &:not([data-color]) .flipper {
+    &:not([data-name]) .flipper {
       transform: rotateY(180deg);
     }
 

@@ -49,7 +49,7 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
    * captured and reused since they move around their identities are kept
    * anonymous.
    */
-  for (const player of board.players) {
+  for (const player of game.players) {
     const mat = board.create(Space, 'mat', { player });
     mat.onEnter(Token, t => t.showToAll());
   }
@@ -63,9 +63,10 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
   game.defineActions({
     take: player => action({
       prompt: 'Choose a token',
-    }).move(
+    }).chooseOnBoard(
       'token', pool.all(Token),
-      'mat', player.my('mat')
+    ).move(
+      'token', player.my('mat')!
     ).message(
       `{{player}} drew a {{token}} token.`
     ).do(({ token }) => {
@@ -73,7 +74,7 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
         game.message("{{player}} wins!", { player });
         game.finish(player);
       }
-    })
+    }),
   });
 
   game.defineFlow(
