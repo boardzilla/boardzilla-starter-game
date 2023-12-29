@@ -3,6 +3,7 @@ import { sassPlugin } from 'esbuild-sass-plugin'
 
 const env = process.env.NODE_ENV || "development"
 const minify = env === "production"
+const sourcemap = env === "production" ? false : "inline"
 
 await esbuild.build({
   format: 'iife',
@@ -15,6 +16,8 @@ await esbuild.build({
     '.scss': 'css',
     '.ogg': 'dataurl',
   },
+  sourcemap,
+  sourceRoot: "src/game",
   keepNames: true,
   sourcemap: 'inline',
   outdir: 'build/game',
