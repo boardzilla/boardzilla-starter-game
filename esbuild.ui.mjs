@@ -17,6 +17,7 @@ await esbuild.build({
     '.ogg': 'dataurl',
   },
   sourcemap,
+  sourceRoot: "src/ui",
   keepNames: true,
   outdir: 'build/ui',
   entryPoints: ['src/ui/index.tsx'],

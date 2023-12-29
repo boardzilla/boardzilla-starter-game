@@ -17,6 +17,7 @@ await esbuild.build({
     '.ogg': 'dataurl',
   },
   sourcemap,
+  sourceRoot: "src/game",
   keepNames: true,
   outdir: 'build/game',
   entryPoints: ['src/game/game-interface.ts'],
