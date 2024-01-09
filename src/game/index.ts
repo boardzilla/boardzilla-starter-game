@@ -3,9 +3,7 @@ import {
   createBoardClasses,
   Player,
   Board,
-  playerActions,
-  loop,
-  eachPlayer,
+  Action,
 } from '@boardzilla/core';
 
 export class MyGamePlayer extends Player<MyGamePlayer, MyGameBoard> {
@@ -29,7 +27,6 @@ export { Space };
 /**
  * Define your game's custom pieces and spaces.
  */
-
 export class Token extends Piece {
   color: 'red' | 'blue';
 }
@@ -37,6 +34,7 @@ export class Token extends Piece {
 export default createGame(MyGamePlayer, MyGameBoard, game => {
 
   const { board, action } = game;
+  const { playerActions, loop, eachPlayer } = game.flowCommands;
 
   /**
    * Register all custom pieces and spaces
@@ -44,27 +42,26 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
   board.registerClasses(Token);
 
   /**
-   * Setup your game board. If you capture your board spaces in variables here,
-   * they are always usable in the action/flow logic below. Pieces cannot be
-   * captured and reused since they move around their identities are kept
-   * anonymous.
+   * Create your game board's layout and all included pieces.
    */
   for (const player of game.players) {
     const mat = board.create(Space, 'mat', { player });
     mat.onEnter(Token, t => t.showToAll());
   }
 
-  const pool = board.create(Space, 'pool');
-  pool.onEnter(Token, t => t.hideFromAll());
-  pool.createMany(board.gameSetting('tokens') - 1, Token, 'blue', { color: 'blue' });
-  pool.create(Token, 'red', { color: 'red' });
-  pool.shuffle();
+  board.create(Space, 'pool');
+  $.pool.onEnter(Token, t => t.hideFromAll());
+  $.pool.createMany(board.gameSetting('tokens') - 1, Token, 'blue', { color: 'blue' });
+  $.pool.create(Token, 'red', { color: 'red' });
 
+  /**
+   * Define all possible game actions.
+   */
   game.defineActions({
     take: player => action({
       prompt: 'Choose a token',
     }).chooseOnBoard(
-      'token', pool.all(Token),
+      'token', $.pool.all(Token),
     ).move(
       'token', player.my('mat')!
     ).message(
@@ -77,7 +74,12 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
     }),
   });
 
+  /**
+   * Define the game flow, starting with board setup and progressing through all
+   * phases and turns.
+   */
   game.defineFlow(
+    () => $.pool.shuffle(),
     loop(
       eachPlayer({
         name: 'player',
