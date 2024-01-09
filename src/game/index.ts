@@ -3,7 +3,6 @@ import {
   createBoardClasses,
   Player,
   Board,
-  Action,
 } from '@boardzilla/core';
 
 export class MyGamePlayer extends Player<MyGamePlayer, MyGameBoard> {
