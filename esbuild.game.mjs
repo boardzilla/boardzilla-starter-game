@@ -19,7 +19,6 @@ await esbuild.build({
   sourcemap,
   sourceRoot: "src/game",
   keepNames: true,
-  sourcemap: 'inline',
   outdir: 'build/game',
   entryPoints: ['src/game/game-interface.ts'],
   bundle: true,

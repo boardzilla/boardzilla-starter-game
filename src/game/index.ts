@@ -50,7 +50,7 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
 
   board.create(Space, 'pool');
   $.pool.onEnter(Token, t => t.hideFromAll());
-  $.pool.createMany(board.gameSetting('tokens') - 1, Token, 'blue', { color: 'blue' });
+  $.pool.createMany(game.setting('tokens') - 1, Token, 'blue', { color: 'blue' });
   $.pool.create(Token, 'red', { color: 'red' });
 
   /**
@@ -84,7 +84,7 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
         name: 'player',
         do: playerActions({
           actions: ['take']
-        })
+        }),
       })
     )
   );

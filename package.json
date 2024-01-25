@@ -4,8 +4,8 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@boardzilla/core": "^0.0.51",
-    "@boardzilla/devtools": "^0.0.46",
+    "@boardzilla/core": "^0.0.67",
+    "@boardzilla/devtools": "^0.0.54",
     "react": "^18.2",
     "react-dom": "^18.2"
   },
