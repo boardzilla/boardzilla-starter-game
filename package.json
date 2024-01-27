@@ -15,7 +15,8 @@
     "@types/react-dom": "^18.2.14",
     "esbuild": "^0.19.2",
     "esbuild-sass-plugin": "^2.15.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^1.2.2"
   },
   "scripts": {
     "dev": "bz run -root .",
@@ -24,7 +25,8 @@
     "build:ui": "npx node esbuild.ui.mjs",
     "build:ui:prod": "NODE_ENV=production npx node esbuild.ui.mjs",
     "build:game": "npx node esbuild.game.mjs",
-    "build:game:prod": "NODE_ENV=production npx node esbuild.game.mjs"
+    "build:game:prod": "NODE_ENV=production npx node esbuild.game.mjs",
+    "test": "vitest"
   },
   "private": true
 }
