@@ -2,7 +2,7 @@ import { expect, test, beforeEach } from 'vitest'
 import { TestRunner } from "@boardzilla/core";
 import { Token, default as setup } from '../src/game/index.js';
 
-let runner: TestRunner
+let runner: TestRunner<ReturnType<typeof setup>['players'][0], ReturnType<typeof setup>['board']>
 
 beforeEach(() => {
   runner = new TestRunner(setup);
@@ -28,7 +28,7 @@ test('allows you to take turns', () => {
     token: player2.board.first('pool')!.first(Token)!
   });
 
-  expect(runner.server.game().phase).toBe('finished')
+  expect(runner.server.game.phase).toBe('finished')
 })
 
 test("doesn't allow one player to play twice", () => {
