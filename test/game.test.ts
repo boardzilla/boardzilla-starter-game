@@ -9,44 +9,42 @@ beforeEach(() => {
 })
 
 test('allows you to take turns', () => {
-  runner.start({
+  const [player1, player2] = runner.start({
     players: 2,
     settings: { tokens: 4 }
   });
 
-  expect(runner.availableActions(1)).toStrictEqual(['take'])
-  expect(runner.availableActions(2)).toStrictEqual([])
+  expect(player1.actions()).toStrictEqual(['take'])
+  expect(player2.actions()).toStrictEqual([])
 
-  runner.move(1, 'take', {
-    token: runner.players[0].board.first('pool')!.last(Token)!
+  player1.move('take', {
+    token: player1.board.first('pool')!.last(Token)!
   });
 
-  expect(runner.availableActions(1)).toStrictEqual([])
-  expect(runner.availableActions(2)).toStrictEqual(['take'])
+  expect(player1.actions()).toStrictEqual([])
+  expect(player2.actions()).toStrictEqual(['take'])
 
-  runner.move(2, 'take', {
-    token: runner.players[1].board.first('pool')!.first(Token)!
+  player2.move('take', {
+    token: player2.board.first('pool')!.first(Token)!
   });
 
   expect(runner.server.game().phase).toBe('finished')
 })
 
 test("doesn't allow one player to play twice", () => {
-  runner.start({
+  const [player1, player2] = runner.start({
     players: 2,
     settings: { tokens: 4 }
   });
 
-  expect(runner.availableActions(1)).toStrictEqual(['take'])
-  expect(runner.availableActions(2)).toStrictEqual([])
+  expect(player1.actions()).toStrictEqual(['take'])
+  expect(player2.actions()).toStrictEqual([])
 
-  runner.move(1, 'take', {
-    token: runner.players[0].board.first('pool')!.last(Token)!
+  player1.move('take', {
+    token: player1.board.first('pool')!.last(Token)!
   });
 
-  expect(runner.availableActions(1)).toStrictEqual([])
-
-  expect(() => runner.move(1, 'take', {
-    token: runner.players[0].board.first('pool')!.last(Token)!
+  expect(() => player1.move('take', {
+    token: player1.board.first('pool')!.last(Token)!
   })).toThrowError()
 })
