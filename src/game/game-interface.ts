@@ -1,5 +1,5 @@
 import setup from './index.js';
-import { createInteface } from '@boardzilla/core';
+import { createInterface } from '@boardzilla/core';
 
-const { initialState, processMove, getPlayerState } = createInteface(setup)
+const { initialState, processMove, getPlayerState } = createInterface(setup)
 export { initialState, processMove, getPlayerState };
