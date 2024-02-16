@@ -14,6 +14,7 @@
     "@types/react-dom": "^18.2.14",
     "esbuild": "^0.19.2",
     "esbuild-sass-plugin": "^2.15.0",
+    "tsc": "^2.0.4",
     "typescript": "^5.2.2",
     "vitest": "^1.2.2"
   },
@@ -21,10 +22,10 @@
     "dev": "bz run -root .",
     "info": "bz info -root .",
     "submit": "bz submit -root .",
-    "build:ui": "npx node esbuild.ui.mjs",
-    "build:ui:prod": "NODE_ENV=production npx node esbuild.ui.mjs",
-    "build:game": "npx node esbuild.game.mjs",
-    "build:game:prod": "NODE_ENV=production npx node esbuild.game.mjs",
+    "build:ui": "tsc --noEmit && npx node esbuild.ui.mjs",
+    "build:ui:prod": "tsc --noEmit && NODE_ENV=production npx node esbuild.ui.mjs",
+    "build:game": "tsc --noEmit && npx node esbuild.game.mjs",
+    "build:game:prod": "tsc --noEmit && NODE_ENV=production npx node esbuild.game.mjs",
     "test": "vitest"
   },
   "private": true
