@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@boardzilla/core": "^0.0.85",
+    "@boardzilla/core": "~0.0.100",
     "react": "^18.2",
     "react-dom": "^18.2"
   },
@@ -14,7 +14,6 @@
     "@types/react-dom": "^18.2.14",
     "esbuild": "^0.19.2",
     "esbuild-sass-plugin": "^2.15.0",
-    "tsc": "^2.0.4",
     "typescript": "^5.2.2",
     "vitest": "^1.2.2"
   },
