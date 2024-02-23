@@ -1,50 +1,50 @@
 import { expect, test, beforeEach } from 'vitest'
 import { TestRunner } from "@boardzilla/core";
-import { Token, default as setup } from '../src/game/index.js';
+import { MyGame, MyGamePlayer, Token, default as setup } from '../src/game/index.js';
 
-let runner: TestRunner<ReturnType<typeof setup>['players'][0], ReturnType<typeof setup>['board']>
+let runner: TestRunner<MyGamePlayer, MyGame>;;
 
 beforeEach(() => {
   runner = new TestRunner(setup);
 })
 
 test('allows you to take turns', () => {
-  const [player1, player2] = runner.start({
+  const [ui1, ui2] = runner.start({
     players: 2,
     settings: { tokens: 4 }
   });
 
-  expect(player1.actions()).toStrictEqual(['take'])
-  expect(player2.actions()).toStrictEqual([])
+  expect(ui1.actions()).toStrictEqual(['take'])
+  expect(ui2.actions()).toStrictEqual([])
 
-  player1.move('take', {
-    token: player1.board.first('pool')!.last(Token)!
+  ui1.move('take', {
+    token: ui1.game.first('pool')!.last(Token)!
   });
 
-  expect(player1.actions()).toStrictEqual([])
-  expect(player2.actions()).toStrictEqual(['take'])
+  expect(ui1.actions()).toStrictEqual([])
+  expect(ui2.actions()).toStrictEqual(['take'])
 
-  player2.move('take', {
-    token: player2.board.first('pool')!.first(Token)!
+  ui2.move('take', {
+    token: ui2.game.first('pool')!.first(Token)!
   });
 
-  expect(runner.server.game.phase).toBe('finished')
+  expect(ui2.game.getWinners()).toStrictEqual([ui2.player])
 })
 
 test("doesn't allow one player to play twice", () => {
-  const [player1, player2] = runner.start({
+  const [ui1, ui2] = runner.start({
     players: 2,
     settings: { tokens: 4 }
   });
 
-  expect(player1.actions()).toStrictEqual(['take'])
-  expect(player2.actions()).toStrictEqual([])
+  expect(ui1.actions()).toStrictEqual(['take'])
+  expect(ui2.actions()).toStrictEqual([])
 
-  player1.move('take', {
-    token: player1.board.first('pool')!.last(Token)!
+  ui1.move('take', {
+    token: ui1.game.first('pool')!.last(Token)!
   });
 
-  expect(() => player1.move('take', {
-    token: player1.board.first('pool')!.last(Token)!
+  expect(() => ui1.move('take', {
+    token: ui1.game.first('pool')!.last(Token)!
   })).toThrowError()
 })

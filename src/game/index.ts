@@ -12,7 +12,7 @@ export class MyGamePlayer extends Player<MyGamePlayer, MyGame> {
   score: number = 0; // as an example
 };
 
-class MyGame extends Game<MyGamePlayer, MyGame> {
+export class MyGame extends Game<MyGamePlayer, MyGame> {
   /**
    * Any overall properties of your game go here
    */
