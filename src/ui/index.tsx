@@ -9,12 +9,12 @@ render(setup, {
   settings: {
     tokens: numberSetting('Number of tokens', 4, 24),
   },
-  layout: board => {
-    board.appearance({
+  layout: game => {
+    game.appearance({
       render: () => null
     });
 
-    board.all(Token).appearance({
+    game.all(Token).appearance({
       aspectRatio: 1,
       render: () => (
         <div className="flipper">
@@ -24,12 +24,12 @@ render(setup, {
       )
     });
 
-    board.layout(Space, {
+    game.layout(Space, {
       gap: 1,
       margin: 1
     });
 
-    board.all(Space).layout(Token, {
+    game.all(Space).layout(Token, {
       gap: 1,
       margin: 1
     });
