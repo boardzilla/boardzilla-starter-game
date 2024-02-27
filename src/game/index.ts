@@ -1,60 +1,60 @@
 import {
   createGame,
-  createBoardClasses,
+  createGameClasses,
   Player,
-  Board,
+  Game,
 } from '@boardzilla/core';
 
-export class MyGamePlayer extends Player<MyGamePlayer, MyGameBoard> {
+export class MyGamePlayer extends Player<MyGamePlayer, MyGame> {
   /**
    * Any properties of your players that are specific to your game go here
    */
-  score: number = 0;
+  score: number = 0; // as an example
 };
 
-class MyGameBoard extends Board<MyGamePlayer, MyGameBoard> {
+export class MyGame extends Game<MyGamePlayer, MyGame> {
   /**
    * Any overall properties of your game go here
    */
-  phase: number = 1;
+  phase: number = 1; // as an example
 }
 
-const { Space, Piece } = createBoardClasses<MyGamePlayer, MyGameBoard>();
+const { Space, Piece } = createGameClasses<MyGamePlayer, MyGame>();
 
 export { Space };
 
 /**
  * Define your game's custom pieces and spaces.
  */
-export class Token extends Piece {
+export class Token extends Piece { // as an example
   color: 'red' | 'blue';
 }
 
-export default createGame(MyGamePlayer, MyGameBoard, game => {
+export default createGame(MyGamePlayer, MyGame, game => {
 
-  const { board, action } = game;
+  const { action } = game;
   const { playerActions, loop, eachPlayer } = game.flowCommands;
 
   /**
    * Register all custom pieces and spaces
    */
-  board.registerClasses(Token);
+  game.registerClasses(Token);
 
   /**
-   * Create your game board's layout and all included pieces.
+   * Create your game's layout and all included pieces, e.g.:
    */
   for (const player of game.players) {
-    const mat = board.create(Space, 'mat', { player });
+    const mat = game.create(Space, 'mat', { player });
     mat.onEnter(Token, t => t.showToAll());
   }
 
-  board.create(Space, 'pool');
+  game.create(Space, 'pool');
   $.pool.onEnter(Token, t => t.hideFromAll());
   $.pool.createMany(game.setting('tokens') - 1, Token, 'blue', { color: 'blue' });
   $.pool.create(Token, 'red', { color: 'red' });
 
   /**
-   * Define all possible game actions.
+   * Define all possible game actions, e.g.:
    */
   game.defineActions({
     take: player => action({
@@ -75,7 +75,7 @@ export default createGame(MyGamePlayer, MyGameBoard, game => {
 
   /**
    * Define the game flow, starting with board setup and progressing through all
-   * phases and turns.
+   * phases and turns, e.g.:
    */
   game.defineFlow(
     () => $.pool.shuffle(),
