@@ -1,32 +1,29 @@
 import {
   createGame,
-  createGameClasses,
   Player,
   Game,
+  Space,
+  Piece,
 } from '@boardzilla/core';
 
-export class MyGamePlayer extends Player<MyGamePlayer, MyGame> {
+export class MyGamePlayer extends Player<MyGame, MyGamePlayer> {
   /**
    * Any properties of your players that are specific to your game go here
    */
   score: number = 0; // as an example
 };
 
-export class MyGame extends Game<MyGamePlayer, MyGame> {
+export class MyGame extends Game<MyGame, MyGamePlayer> {
   /**
    * Any overall properties of your game go here
    */
   phase: number = 1; // as an example
 }
 
-const { Space, Piece } = createGameClasses<MyGamePlayer, MyGame>();
-
-export { Space };
-
 /**
  * Define your game's custom pieces and spaces.
  */
-export class Token extends Piece { // as an example
+export class Token extends Piece<MyGame> { // as an example
   color: 'red' | 'blue';
 }
 
@@ -34,11 +31,6 @@ export default createGame(MyGamePlayer, MyGame, game => {
 
   const { action } = game;
   const { playerActions, loop, eachPlayer } = game.flowCommands;
-
-  /**
-   * Register all custom pieces and spaces
-   */
-  game.registerClasses(Token);
 
   /**
    * Create your game's layout and all included pieces, e.g.:

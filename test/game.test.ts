@@ -1,8 +1,8 @@
 import { expect, test, beforeEach } from 'vitest'
 import { TestRunner } from "@boardzilla/core";
-import { MyGame, MyGamePlayer, Token, default as setup } from '../src/game/index.js';
+import setup, { MyGame, Token } from '../src/game/index.js';
 
-let runner: TestRunner<MyGamePlayer, MyGame>;;
+let runner: TestRunner<MyGame>;
 
 beforeEach(() => {
   runner = new TestRunner(setup);

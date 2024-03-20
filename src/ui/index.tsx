@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, numberSetting } from '@boardzilla/core';
-import { default as setup, Space, Token } from '../game/index.js';
+import { render, numberSetting, Space } from '@boardzilla/core';
+import setup, { Token } from '../game/index.js';
 
 import './style.scss';
 import '@boardzilla/core/index.css';
@@ -29,7 +29,7 @@ render(setup, {
       margin: 1
     });
 
-    game.all(Space).layout(Token, {
+    game.all('pool').layout(Token, {
       gap: 1,
       margin: 1
     });
