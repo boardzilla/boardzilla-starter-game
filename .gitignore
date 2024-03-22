@@ -3,3 +3,4 @@
 /.save-states
 /package-lock.json
 /yarn.lock
+tsconfig.tsbuildinfo
