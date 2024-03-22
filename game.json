@@ -5,11 +5,11 @@
     "root": ".",
     "build": {
       "dev": [
-        "npm run tsc",
+        "npm run typecheck",
         "npm run build:ui"
       ],
       "prod": [
-        "npm run tsc",
+        "npm run typecheck",
         "npm run build:ui:prod"
       ]
     },
@@ -23,11 +23,11 @@
     "root": ".",
     "build": {
       "dev": [
-        "npm run tsc",
+        "npm run typecheck",
         "npm run build:game"
       ],
       "prod": [
-        "npm run tsc",
+        "npm run typecheck",
         "npm run build:game:prod"
       ]
     },
